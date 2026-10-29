@@ -1,0 +1,1 @@
+""" Classe abstrata com dados e operações comuns aos serviços """
