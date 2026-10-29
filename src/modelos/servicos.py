@@ -9,7 +9,8 @@ class Servico(ABC):
 
     @abstractmethod
     def calcular_preco(self) -> float:
-        """Retorna o preço do serviço."""
+        """Retorna o preço do serviço e obriga as subclasses
+        a utilizarem esse atributo."""
         pass
 
     def __str__(self) -> str:
@@ -26,20 +27,20 @@ class Banho(Servico):
         super().__init__("Banho")
 
     def calcular_preco(self) -> float:
-        """Retorna o preço do banho."""
+        """Retorna o preço do banho. Uso do Polimorfismo."""
         return self.PRECO
 
 class Tosa(Servico):
     """Retorna o serviço de tosa."""
 
-    PRECO = 50.0
+    PRECO = 65.0
 
     def __init__(self) -> None:
         super().__init__("Tosa")
 
     def calcular_preco(self) -> float:
-        """Retorna o preço da tosa."""
+        """Retorna o preço da tosa. Uso do Polimorfismo."""
         return self.PRECO
 
-        
+
 
