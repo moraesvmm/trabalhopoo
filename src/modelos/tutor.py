@@ -1,5 +1,3 @@
-_tutores : list[Tutor] = []
-
 class Tutor:
     """Representa o responsável por um pet."""
     total_criados : int = 0
@@ -50,7 +48,7 @@ class Tutor:
         return len(digitos) in (10, 11)
     
     @staticmethod
-    def cadastrar_tutor() -> Tutor:
+    def cadastrar_tutor() -> "Tutor":
         """ Método que cria um objeto Tutor. """
         nome_tutor : str = input("Insira o nome do tutor: ")
         telefone_tutor : str = input("Insira o telefone do tutor\nExemplo - XXXXXXXXXXX : ")
@@ -73,3 +71,5 @@ class Tutor:
     def __str__(self) -> str:
         """Retorna uma descrição do tutor."""
         return f"Tutor: {self.nome} - Telefone: {self.telefone}"
+
+_tutores : list[Tutor] = []
