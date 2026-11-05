@@ -1,6 +1,10 @@
-from modelos.servicos import Servico
+from datetime import datetime
+from modelos.servicos import Servico, Banho, Tosa, Hospedagem
+from modelos.agendamento import Agendamento
 from modelos.pet import Pet, Cachorro, Cavalo, Gato, Lontra
 from modelos.tutor import Tutor
+
+agendamentos: list[Agendamento] = []
 
 """ Método para criar interface no cmd.  """
 def menu_index() -> None :
@@ -18,7 +22,7 @@ def menu_index() -> None :
     menu : int = None
     while menu != 0:
         print(escolha_menu)
-        menu = int(input("Digite o que deseja fazer: "))
+        menu = float(input("Digite o que deseja fazer: "))
         match menu:
             case 1 :
                 nome_pet : str = input("Digite o nome do pet: ").upper()
@@ -64,7 +68,29 @@ def menu_index() -> None :
                 input("Pressione enter para continuar...")
                 continue
             case 5:
-                pass
+                pet_escolhido = Pet.procurar_pet(input("Nome do pet: ").strip())
+                if pet_escolhido is None:
+                    continue
+
+                print("1 - Banho | 2 - Tosa | 3 - Hospedagem")
+                servicos = {1: Banho(), 2: Tosa(), 3: Hospedagem()}
+                try:
+                    servico_escolhido = servicos[int(input("Escolha o serviço: "))]
+                except (ValueError, KeyError):
+                    print("Opção de serviço inválida.")
+                    continue
+
+                texto_data = input("Data e hora (dd/mm/aaaa hh:mm): ")
+                try:
+                    data_hora = datetime.strptime(texto_data, "%d/%m/%Y %H:%M")
+                except ValueError:
+                    print("Data inválida. Use o formato dd/mm/aaaa hh:mm.")
+                    continue
+
+                agendamento = Agendamento(pet_escolhido, servico_escolhido, data_hora)
+                agendamentos.append(agendamento)
+                print("Agendamento realizado com sucesso!")
+                continue
             case 6:
                 pass
             case 7:

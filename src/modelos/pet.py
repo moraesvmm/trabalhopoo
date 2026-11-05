@@ -1,3 +1,4 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
 from modelos.tutor import Tutor
 
@@ -7,15 +8,13 @@ PORTE : dict[int, str] = {
     3 : "GRANDE"
 }
 
-pets : list[Pet] = []
-
 class Pet(ABC):
     """ Guarda o nome, espécie, porte e tutor que pertence"""
     def __init__(self, animal : str, nome : str, especie : str, porte : str, tutor : Tutor, peso : float) -> None:
         self._animal = animal
         self._nome =  nome.upper()
         self._especie = especie.upper()
-        self._porte = self.validar_porte(self, porte)
+        self._validar_porte(porte)
         self._tutor_reponsavel = tutor
         self._peso = peso
     
@@ -40,13 +39,14 @@ class Pet(ABC):
         return self._tutor_reponsavel
     
     @porte.setter
-    def alterar_porte(self, porte : str):
-        self._validar_porte(self, porte)
+    def porte(self, porte : str):
+        self._validar_porte(porte)
     
     def _validar_porte(self, porte : str) -> None :
-        if porte.upper() not in PORTE.values():
-            print(f"Não é possível definir o porte deste valor, tente: {PORTE.values()}")
-        self._porte = porte.upper()
+        porte_validado = porte.upper()
+        if porte_validado not in PORTE.values():
+            raise ValueError(f"Porte inválido. Use um destes: {PORTE.values()}")
+        self._porte = porte_validado
     
     @staticmethod
     def procurar_pet(nome_pet : str) -> str :
@@ -82,3 +82,4 @@ class Lontra(Pet):
     def __init__(self, nome, especie, porte, tutor, peso) -> None:
         super().__init__("Lontra", nome, especie, porte, tutor, peso)
         
+pets : list[Pet] = []
